@@ -32,7 +32,7 @@
     <!-- 扫描全局module -->
     <!-- 每一个在包 module 中的 Java Bean，在没有@Alias("User")注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 modul.system.user.User 的别名为 user；若有注解，则别名为其注解值。看下面的例子： -->
     <typeAliases>
-        <package name="com.xiaomingbudushu.erp.module"/>
+        <package name="com.gemini.ssm.module"/>
     </typeAliases>
 
 

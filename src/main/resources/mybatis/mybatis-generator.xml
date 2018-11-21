@@ -25,18 +25,18 @@
 		</javaTypeResolver>
 		
 		<!-- modul路径 -->
-		<javaModelGenerator targetPackage="com.xiaomingbudushu.erp.modul.system.org" targetProject=".\src\main\java">
+		<javaModelGenerator targetPackage="com.gemini.ssm.modul.system.org" targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		
 		<!-- mapper路径 -->
-		<sqlMapGenerator targetPackage="com.xiaomingbudushu.erp.mapper.system.org"  targetProject=".\src\main\java">
+		<sqlMapGenerator targetPackage="com.gemini.ssm.mapper.system.org"  targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		
 		<!-- Dao路径 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xiaomingbudushu.erp.mapper.system.org"  targetProject=".\src\main\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.gemini.ssm.mapper.system.org"  targetProject=".\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		

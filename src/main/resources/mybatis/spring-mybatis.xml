@@ -20,10 +20,10 @@
         不用在其中指定数据源，或者事务处理方式。就算配置了也会被忽略。因为这些都是使用Spring中的配置 。
         当然如果你不打算添加typeAlias 之类的设置的话，你连MyBatis的配置文件都不用写，更不用配置这个属性了 -->
         <property name="configLocation" value="classpath:mybatis/mybatis.xml"></property>
-        <!--<property name="typeAliasesPackage" value="com.xiaomingbudushu.erp.model"/>-->
+        <!--<property name="typeAliasesPackage" value="com.gemini.ssm.model"/>-->
         <!-- mapperLocations加载mybatis所有的mapper.xml -->
         <!-- 该配置文件用来指定mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项，不在同一包下则需要配置 -->
-        <property name="mapperLocations" value="classpath:com/xiaomingbudushu/erp/module/sys/dao/org/OrgDao.xml"></property>
+        <property name="mapperLocations" value="classpath:com/gemini/ssm/module/sys/dao/org/OrgDao.xml"></property>
     </bean>
 
 
@@ -32,7 +32,7 @@
         <!-- 引入sqlSessionFactory -->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
-        <property name="basePackage" value="com.xiaomingbudushu.erp.module.*.dao.*"/>
+        <property name="basePackage" value="com.gemini.ssm.module.*.dao.*"/>
     </bean>
 
     <!-- 3、配置一个可以执行批量操作的sqlSession -->

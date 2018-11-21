@@ -21,7 +21,7 @@
 	<!--</bean>-->
 
 	<!-- 3. 配置 Realm 3.1 直接配置实现了 org.apache.shiro.realm.Realm 接口的 bean -->
-	<bean id="shiroRealm" class="com.xiaomingbudushu.erp.shiro.realms.ShiroRealm">
+	<bean id="shiroRealm" class="com.gemini.ssm.shiro.realms.ShiroRealm">
 		<property name="credentialsMatcher">
 			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 				<!-- 加密类型 MD5 -->

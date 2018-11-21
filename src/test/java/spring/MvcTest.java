@@ -1,7 +1,7 @@
 package spring;
 
 import com.github.pagehelper.PageInfo;
-import com.xiaomingbudushu.erp.module.sys.entity.user.User;
+import com.gemini.ssm.module.sys.entity.user.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

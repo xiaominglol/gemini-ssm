@@ -22,7 +22,7 @@
             <name>GuanyiSynch_Job</name>  
             <group>DEFAULT_GRP</group>  
             <description>GuanyiSynch_Job</description>  
-            <job-class>com.xiaomingbudushu.erp.module.sys.job.CronJob1</job-class>
+            <job-class>com.gemini.ssm.module.sys.job.CronJob1</job-class>
         </job>  
         <trigger>
             <cron>  

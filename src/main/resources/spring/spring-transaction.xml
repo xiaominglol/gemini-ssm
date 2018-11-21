@@ -41,7 +41,7 @@
 	 	use-default-filters默认为true，默认会扫描@Component、@Controller、@Repository、@Service的注解
 		可以使用base-package="*"表示全部的类
 	 -->
-	<context:component-scan base-package="com.xiaomingbudushu.erp">
+	<context:component-scan base-package="com.gemini.ssm">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 
@@ -78,7 +78,7 @@
 	<!-- aop配置  -->
 	<aop:config>
 		<!-- pointcut:执行service下impl下的所有类的所有方法不管什么参数  -->
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.xiaomingbudushu.erp.module..*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.gemini.ssm.module..*(..))" />
 	</aop:config>
 
 	<!-- 采用CGLIB代理 待测试

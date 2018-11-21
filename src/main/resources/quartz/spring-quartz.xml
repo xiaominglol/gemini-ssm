@@ -30,7 +30,7 @@
         <!-- 指定job的分组 -->
         <property name="group" value="test_group"/>
         <!-- 指定具体的job类 -->
-        <property name="jobClass" value="com.xiaomingbudushu.erp.module.sys.job.CronJob1"/>
+        <property name="jobClass" value="com.gemini.ssm.module.sys.job.CronJob1"/>
         <!-- 必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中会删除该任务  -->
         <property name="durability" value="true"/>
     </bean>
@@ -47,7 +47,7 @@
         <!-- 指定job的分组 -->
         <property name="group" value="test_group"/>
         <!-- 指定具体的job类 -->
-        <property name="jobClass" value="com.xiaomingbudushu.erp.module.sys.job.SimpleJob"/>
+        <property name="jobClass" value="com.gemini.ssm.module.sys.job.SimpleJob"/>
         <!-- 必须设置为true，如果为false，当没有活动的触发器与之关联时会在调度器中会删除该任务  -->
         <property name="durability" value="true"/>
         <!-- 这里设置的jobDataAsMap可以传递一些参数给作业任务 -->
@@ -68,7 +68,7 @@
 -->
     <!-- 使用MethodInvokingJobDetailFactoryBean来创建作业对象 -->
     <!--
-    <bean id="exampleJob" class="com.xiaomingbudushu.erp.module.sys.job.CronJob"/>
+    <bean id="exampleJob" class="com.gemini.ssm.module.sys.job.CronJob"/>
     <bean id="methodInvokingJobDetailFactoryBeanExample" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         &lt;!&ndash; 目标对象，指的是作业任务的实现类 &ndash;&gt;
         <property name="targetObject" ref="exampleJob"/>

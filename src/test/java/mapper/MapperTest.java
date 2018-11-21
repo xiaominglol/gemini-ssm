@@ -1,8 +1,8 @@
 package mapper;
 
-import com.xiaomingbudushu.erp.module.common.entity.CommonStatus;
-import com.xiaomingbudushu.erp.module.sys.dao.user.UserDao;
-import com.xiaomingbudushu.erp.module.sys.entity.user.User;
+import com.gemini.ssm.module.common.entity.CommonStatus;
+import com.gemini.ssm.module.sys.dao.user.UserDao;
+import com.gemini.ssm.module.sys.entity.user.User;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;

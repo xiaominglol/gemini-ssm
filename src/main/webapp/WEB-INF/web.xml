@@ -105,7 +105,7 @@
     <!-- ==============================测试============================== -->
     <filter>
         <filter-name>MenuFilter</filter-name>
-        <filter-class>com.xiaomingbudushu.erp.filter.MenuFilter</filter-class>
+        <filter-class>com.gemini.ssm.filter.MenuFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>MenuFilter</filter-name>

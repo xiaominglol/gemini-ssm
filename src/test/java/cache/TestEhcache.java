@@ -1,6 +1,6 @@
 package cache;
 
-import com.xiaomingbudushu.erp.module.sys.service.menu.MenuService;
+import com.gemini.ssm.module.sys.service.menu.MenuService;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
