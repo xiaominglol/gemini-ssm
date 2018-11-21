@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.1.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+      http://www.springframework.org/schema/aop 
+	  http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+
+	<!--=========================Spring 事务配置=========================-->
+
+	<!--参考网址：https://blog.csdn.net/qq_27093465/article/details/50524940-->
+
+	<!-- 1、(待测试)该 BeanPostProcessor 将自动对标注 @Autowired 的 Bean 进行注入 -->
+
+	<!--<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
+
+	<!--
+		2、(待测试)添加MVC默认的注解映射的支持
+		默认加载以下四个Bean
+		AutowiredAnnotationBeanPostProcessor
+		CommonAnnotationBeanPostProcessor
+		PersistenceAnnotationBeanPostProcessor
+		RequiredAnnotationBeanPostProcessor
+		所以就不需要单独配置第一项了
+	-->
+
+	<!--<context:annotation-config />-->
+
+
+	<!--
+		3、自动扫描该包，使SpringMVC认为包下用了@service注解的类是业务类
+	 	注：由于<context:component-scan base-package=”xx.xx”/>也包含了自动注入上述Bean的功能，
+	 	所以<context:annotation-config/> 可以省略。如果两者都进行了配置，则只有前者有效。
+
+	 	use-default-filters默认为true，默认会扫描@Component、@Controller、@Repository、@Service的注解
+		可以使用base-package="*"表示全部的类
+	 -->
+	<context:component-scan base-package="com.xiaomingbudushu.erp">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+
+
+	<!-- (待测试)事务管理 对mybatis操作数据库的控制，spring使用jdbc的事务控制 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<!-- (待测试)启用对事务的注解支持,transaction-manager:引用上面定义的事务管理器 
+		<tx:annotation-driven transaction-manager="transactionManager" /> -->
+	</bean>
+	<!-- 事务注解 支持 @Transactional -->
+	<!--
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    -->
+
+	<!-- (待测试)通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 所有方法 使用默认的事务管理  -->
+			<tx:method name="*"/>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED"/>
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- aop配置  -->
+	<aop:config>
+		<!-- pointcut:执行service下impl下的所有类的所有方法不管什么参数  -->
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.xiaomingbudushu.erp.module..*(..))" />
+	</aop:config>
+
+	<!-- 采用CGLIB代理 待测试
+	<aop:aspectj-autoproxy proxy-target-class="true" /> -->
+
+</beans>

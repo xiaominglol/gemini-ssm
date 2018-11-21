@@ -1,0 +1,31 @@
+<!-- ======== Quartz配置 ===================== -->
+
+<servlet>
+    <servlet-name>QuartzInitializer</servlet-name>
+    <servlet-class>org.quartz.ee.servlet.QuartzInitializerServlet</servlet-class>
+    <init-param>
+        <param-name>config-file</param-name>
+        <param-value>classpath:quartz.properties</param-value>
+    </init-param>
+    <init-param>
+        <param-name>start-scheduler-on-load</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>start-delay-seconds</param-name>
+        <param-value>30</param-value>
+    </init-param>
+    <init-param>
+        <param-name>shutdown-on-unload</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>wait-on-shutdown</param-name>
+        <param-value>true</param-value>
+    </init-param>
+    <init-param>
+        <param-name>scheduler-context-servlet-context-key</param-name>
+        <param-value>SERVLET_CONTEXT</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+</servlet>

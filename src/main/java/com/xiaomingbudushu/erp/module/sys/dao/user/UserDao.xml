@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：必须与对应的接口全类名一致 UserDao.java id ：必须与对应接口的某个对应的方法名一致即必须要和UserMapper.java接口中的方法同名。 -->
+<mapper namespace="com.xiaomingbudushu.erp.module.sys.dao.user.UserDao">
+
+	<!-- 解决表名与字段不匹配 -->
+
+	<!--<resultMap type="BaseModel" id="BaseModulMap">
+		<result column="status" jdbcType="TINYINT" property="status" />
+		<result column="last_update_id" jdbcType="VARCHAR" property="lastUpdateId" />
+		<result column="last_update_name" jdbcType="VARCHAR" property="lastUpdateName" />
+		<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	</resultMap>-->
+
+	<resultMap type="com.xiaomingbudushu.erp.module.sys.entity.user.User" id="BaseResultMap" >
+		<id column="user_account" jdbcType="VARCHAR" property="userAccount" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="user_picture" jdbcType="VARCHAR" property="userPicture" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+		<result column="last_update_id" jdbcType="VARCHAR" property="lastUpdateId" />
+		<result column="last_update_name" jdbcType="VARCHAR" property="lastUpdateName" />
+		<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		user_account, user_name, password, user_picture, create_date, status,
+		last_update_time, last_update_id, last_update_name
+	</sql>
+	
+	<!-- mybsits_config中配置的alias类别名,也可直接配置resultType为类路径 -->
+	
+	<!-- 查询所有用户 -->
+	<select id="list" parameterType="com.xiaomingbudushu.erp.module.sys.entity.user.User" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_sys_user
+		<if test="userName != null and userName != '' ">
+			where user_name like #{userName}
+		</if>
+	</select>
+	
+	<!-- 增加用户 -->
+	<insert id="add" parameterType="com.xiaomingbudushu.erp.module.sys.entity.user.User">
+		insert into
+		t_sys_user(<include refid="Base_Column_List"/>)
+		values(#{userAccount},#{userName},#{password},#{userPicture},#{createDate},#{status},#{lastUpdateId},#{lastUpdateName},#{lastUpdateTime})
+	</insert>
+	
+	<!-- 根据userAccount更新用户 -->
+	<update id="update" parameterType="com.xiaomingbudushu.erp.module.sys.entity.user.User">
+		update t_sys_user set
+		user_account=#{userAccount}
+		,user_name=#{userName}
+		,password=#{password}
+		,user_picture=#{userPicture}
+		,create_date=#{createDate}
+		,status=#{status}
+		,last_update_id=#{lastUpdateId}
+		,last_update_name=#{lastUpdateName}
+		,last_update_time=#{lastUpdateTime}
+		where user_account=#{userAccount}
+	</update>
+	
+	<!-- 根据userAccount删除用户 -->
+	<delete id="delete" parameterType="String">
+		delete from t_sys_user
+		where user_account=#{userAccount}
+	</delete>
+	
+	<!-- 根据userAccount查询用户 -->
+	<select id="getUserById" parameterType="String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from t_sys_user
+		where user_account=#{userAccount}
+	</select>
+	
+	<!-- 根据userAccount查询用户角色 -->
+	<select id="getRoleById" parameterType="String" resultType="String">
+		select role_id
+		from t_sys_user_role
+		where user_account=#{userAccount}
+	</select>
+	
+	<!-- 根据userAccount查询用户权限 -->
+	<select id="getPermissionsById" parameterType="String" resultType="String">
+		select mr.menu_id
+		from t_sys_user_role ur left join t_sys_permissions mr
+		on (ur.role_id = mr.permissions_id or ur.user_account = mr.permissions_id)
+		where ur.user_account=#{userAccount}
+	</select>
+</mapper>  

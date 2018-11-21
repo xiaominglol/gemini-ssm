@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!--=========================Spring 数据源配置===================-->
+    <import resource="classpath:datasource/spring-datasource.xml"/>
+
+    <!--=========================JPA Mybatis配置=====================-->
+    <import resource="classpath:mybatis/spring-mybatis.xml"/>
+
+    <!--=========================Spring 事务配置=====================-->
+    <import resource="classpath:spring/spring-transaction.xml"/>
+
+    <!--=========================Shiro 配置==========================-->
+    <import resource="classpath:shiro/spring-shiro.xml"/>
+
+    <!--=========================cache 缓存配置======================-->
+    <import resource="classpath:ehcache/spring-ehcache.xml"/>
+
+    <!--=========================Timer 定时器配置====================-->
+    <import resource="classpath:quartz/spring-quartz.xml"/>
+
+    <!--=========================Workflow 工作流配置=================-->
+    <import resource="classpath:activity/spring-activity.xml"/>
+
+</beans>

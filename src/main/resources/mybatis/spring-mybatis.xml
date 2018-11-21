@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+    <!--=========================第二步：Spring整合mybatis=========================-->
+
+    <!-- 1、Spring整合MyBatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 引入数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- configLocation加载mybatis的全局配置文件 -->
+        <!-- 该属性用来指定MyBatis的XML配置文件路径,跟Spring整合时，
+        编写MyBatis映射文件的目的无非是配置一下typeAlias、setting之类的 元素。
+        不用在其中指定数据源，或者事务处理方式。就算配置了也会被忽略。因为这些都是使用Spring中的配置 。
+        当然如果你不打算添加typeAlias 之类的设置的话，你连MyBatis的配置文件都不用写，更不用配置这个属性了 -->
+        <property name="configLocation" value="classpath:mybatis/mybatis.xml"></property>
+        <!--<property name="typeAliasesPackage" value="com.xiaomingbudushu.erp.model"/>-->
+        <!-- mapperLocations加载mybatis所有的mapper.xml -->
+        <!-- 该配置文件用来指定mapper映射文件的位置 ，如果映射文件与相应的接口同名，且在同一路径下，那么可以不配置该选项，不在同一包下则需要配置 -->
+        <property name="mapperLocations" value="classpath:com/xiaomingbudushu/erp/module/sys/dao/org/OrgDao.xml"></property>
+    </bean>
+
+
+    <!-- 2、扫描dao层接口，动态实现dao接口，也就是说不需要daoImpl,将Mybatis接口的实现加入到ioc容器中 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 引入sqlSessionFactory -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- DAO接口所在包名，Spring会自动查找其下的类 -->
+        <property name="basePackage" value="com.xiaomingbudushu.erp.module.*.dao.*"/>
+    </bean>
+
+    <!-- 3、配置一个可以执行批量操作的sqlSession -->
+    <bean id="sqlSeesion" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+        <constructor-arg name="executorType" value="BATCH"></constructor-arg>
+    </bean>
+
+
+</beans>

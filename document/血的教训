@@ -1,0 +1,6 @@
+一、
+<form class="form-inline">
+    <button type="button" id="query" class="btn btn-default">查询</button>
+</form>
+在使用from查询是不能将button的type改为submit，因为项目用了iframe，会导致提交的时候，先提交
+from的url，然后刷新了table，连带刷新了iframe，这样就会再刷新iframe的url，导致查询结果无效

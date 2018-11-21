@@ -1,0 +1,120 @@
+<style>
+header{
+	width: 813px;
+	overflow: hidden;
+	border: 1px solid #dcdcdc;
+	border-right:none;
+}
+header span{
+	float: left;
+	width: 270px;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	border-right: 1px solid #dcdcdc;
+	cursor: pointer;
+}	
+header span.current{
+	background: rgba(0, 153, 255, 1);
+	color: #fff;
+}
+.box_all div{
+	display: none;
+}
+.box_all .box_1{
+	display: block;
+}
+.button_all{
+	width: 813px;
+	text-align: center;
+}
+.button_all button{
+	display: inline-block;
+	width: 140px;
+	height: 40px;
+	line-height: 40px;
+	border: 1px solid #dcdcdc;
+	border-radius: 4px;
+	color: #fff;
+	background: rgba(0, 153, 255, 1);
+	outline: none;
+	cursor: pointer;
+	display: none;
+}
+.button_all .btn_pre{
+	color: #222;
+	background: #fff;
+}
+.button_all .btn_nxt{
+	display: inline-block;
+}
+</style>
+
+<div>
+	<header>
+		<span class='current'>1.设置活动</span>
+		<span>2.选择商品</span>
+		<span>3.设置商品优惠</span>
+	</header>
+	<div class='box_all'>
+		<div class='box_1'>盒子1</div>
+		<div class='box_2'>盒子2</div>
+		<div class='box_3'>盒子3</div>
+	</div>
+	<div class='button_all'>
+		<button class='btn_pre'>上一步</button>
+		<button class='btn_nxt'>下一步</button>
+		<button class='btn_end'>完成</button>
+	</div>
+</div>
+
+<script src="jquery.js" ></script>
+<script>
+$(function(){
+	$('header span').click(function(){
+		var cIndex = $(this).index();
+		$(this).addClass('current').siblings().removeClass('current');
+		$('.box_all div').eq(cIndex).show().siblings().hide();
+		if( cIndex == 0 ){
+			$('.btn_nxt').show().siblings().hide();
+		}else if( cIndex == 1 ){
+			$('.button_all button').hide();
+			$('.btn_nxt,.btn_pre').show();
+		}else{
+			$('.btn_nxt').hide().siblings().show();
+		}
+	})
+	
+	$('.btn_nxt').click(function(){
+		var cIndex = $('header span.current').index();
+		if( cIndex == 0 ){
+			$('.button_all button').hide();
+			$('.btn_nxt,.btn_pre').show();
+			$('header span').eq(1).addClass('current').siblings().removeClass('current');
+			$('.box_all div').eq(1).show().siblings().hide();
+		} 
+		if( cIndex == 1 ){
+			$('.button_all button').show();
+			$(this).hide();
+			$('header span').eq(2).addClass('current').siblings().removeClass('current');
+			$('.box_all div').eq(2).show().siblings().hide();
+		}
+	})
+	
+	$('.btn_pre').click(function(){
+		var cIndex = $('header span.current').index();
+		if( cIndex == 1 ){
+			$('.button_all button').hide();
+			$('.btn_nxt').show();
+			$('header span').eq(0).addClass('current').siblings().removeClass('current');
+			$('.box_all div').eq(0).show().siblings().hide();
+		} 
+		if( cIndex == 2 ){
+			$('.button_all button').show();
+			$('.btn_end').hide();
+			$('header span').eq(1).addClass('current').siblings().removeClass('current');
+			$('.box_all div').eq(1).show().siblings().hide();
+		}
+	})
+})
+</script>

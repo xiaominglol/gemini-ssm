@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!--=========================Mybatis 基本配置=====================-->
+
+	<!--
+    在配置文件中的位置必须符合要求，否则会报错，顺序如下:
+    properties?, settings?,
+    typeAliases?, typeHandlers?,
+    objectFactory?,objectWrapperFactory?,
+    plugins?,
+    environments?, databaseIdProvider?, mappers?
+	-->
+
+	<!-- 全局配置 -->
+	<settings>
+		<!-- 配置mybatis的sql以log4j打印 -->
+		<setting name="logImpl" value="LOG4J"/>
+		
+		<!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+		<setting name="useGeneratedKeys" value="true" />
+
+		<!-- 使用列别名替换列名 默认:true -->
+		<setting name="useColumnLabel" value="true" />
+
+		<!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	
+    <!-- 扫描全局module -->
+    <!-- 每一个在包 module 中的 Java Bean，在没有@Alias("User")注解的情况下，会使用 Bean 的首字母小写的非限定类名来作为它的别名。 比如 modul.system.user.User 的别名为 user；若有注解，则别名为其注解值。看下面的例子： -->
+    <typeAliases>
+        <package name="com.xiaomingbudushu.erp.module"/>
+    </typeAliases>
+
+
+	<!--分页插件配置-->
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+			<!--配置后会报错 Caused by: java.lang.ClassNotFoundException: mysql-->
+			<!--<property name="dialect" value="mysql"/>-->
+			<!-- 当查询页数小于首页或者大于末页时，默认查首页或者末页 -->
+			<property name="reasonable" value="true"/>
+		</plugin>
+	</plugins>
+	
+</configuration>
+

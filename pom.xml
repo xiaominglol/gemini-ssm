@@ -1,0 +1,407 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.xiaomingbudushu</groupId>
+    <artifactId>erp</artifactId>
+    <packaging>war</packaging>
+    <version>1.0.0</version>
+    <name>erp</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- spring -->
+        <!--
+        org.springframework	spring-aop	基于代理的AOP
+        org.springframework	spring-aspects	基于切面的AspectJ
+        org.springframework	spring-beans	bean支持，包括Groovy
+        org.springframework	spring-context	运行时上下文，包括调度和远程调用抽象
+        org.springframework	spring-context-support	包含用于集成第三方库到Spring上下文的类
+        org.springframework	spring-core	核心库，被许多其它模块使用
+        org.springframework	spring-expression	Spring表达式语言
+        org.springframework	spring-instrument	JVM引导的检测代理
+        org.springframework	spring-instrument-tomcat	tomcat的检测代理
+        org.springframework	spring-jdbc	JDBC支持包，包括对数据源设置和JDBC访问支持
+        org.springframework	spring-jms	JMS支持包，包括发送和接收JMS消息的帮助类
+        org.springframework	spring-messaging	消息处理的架构和协议
+        org.springframework	spring-orm	对象关系映射，包括对JPA和Hibernate支持
+        org.springframework	spring-oxm	对象XML映射
+        org.springframework	spring-test	单元测试和集成测试组件
+        org.springframework	spring-tx	事务基础，包括对DAO的支持及JCA的集成
+        org.springframework	spring-web	web支持包，包括客户端及web远程调用
+        org.springframework	spring-webmvc	REST web服务及web应用的MVC实现
+        org.springframework	spring-webmvc-portlet	用于Portlet环境的MVC实现
+        org.springframework	spring-websocket	WebSocket和SockJS实现，包括对STOMP的支持
+        -->
+        <spring-version>4.3.14.RELEASE</spring-version>
+
+        <!-- mybatis -->
+        <mybatis-version>3.4.2</mybatis-version>
+        <mybatis-spring-version>1.3.1</mybatis-spring-version>
+        <mybatis-generator-core>1.3.5</mybatis-generator-core>
+
+        <!-- mysql -->
+        <mysql-version>5.1.37</mysql-version>
+        <!-- druid -->
+        <druid-version>1.0.4</druid-version>
+
+        <!-- shiro -->
+        <shiro-version>1.3.2</shiro-version>
+
+        <!-- javaee api -->
+        <javaee-version>7.0</javaee-version>
+        <!-- jstl -->
+        <jstl-version>1.2</jstl-version>
+        <!-- servlet-api -->
+        <servlet-api-version>3.0.1</servlet-api-version>
+
+
+
+        <!-- pagehelper -->
+        <pagehelper-version>5.1.2</pagehelper-version>
+
+        <!-- junit -->
+        <junit-version>4.12</junit-version>
+
+        <!-- log4j日志文件管理包版本 -->
+        <slf4j-version>1.7.25</slf4j-version>
+        <log4j-version>1.2.17</log4j-version>
+        <fastjson-version>1.2.30</fastjson-version>
+        <jackson-version>2.8.8</jackson-version>
+
+        <!-- cache -->
+        <ehcache-version>2.10.0</ehcache-version>
+
+        <!--activity-->
+        <activity-version>6.0.0</activity-version>
+    </properties>
+
+    <dependencies>
+
+        <!-- ==============================Spring 开始============================== -->
+
+        <!--
+        1、从spring-core模块中去除对commons-logging的依赖，使用SLF4J替换，SLF4J是一个更干净的依赖
+        2、依赖于一个特定的commons-logging且把其jar包换成一个空jar包
+        参考文章：https://www.cnblogs.com/wangdaijun/p/6142168.html
+        -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring-version}</version>
+            <exclusions>
+                <!--去掉commons-logging依赖-->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Spring Mvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!-- Spring jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!-- Spring面向切面编程，事务控制 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!-- Spring单元测试 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-version}</version>
+        </dependency>
+
+        <!-- ==============================Spring 结束============================== -->
+
+
+        <!-- ==============================Mybatis 开始============================== -->
+
+        <!-- Mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>${mybatis-version}</version>
+        </dependency>
+
+        <!-- Mybatis和Spring集成包 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis-spring-version}</version>
+        </dependency>
+
+        <!-- Mybate自动生成包 -->
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>${mybatis-generator-core}</version>
+        </dependency>
+
+        <!-- Mybatis分页插件 -->
+        <!-- 依赖 jsqlparser-0.9.5.jar -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper-version}</version>
+        </dependency>
+
+        <!-- ==============================Mybatis 结束============================== -->
+
+
+        <!-- ============================数据库相关jar包 开始========================= -->
+
+        <!-- mysql驱动包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-version}</version>
+        </dependency>
+
+        <!-- druid数据库连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid-version}</version>
+        </dependency>
+
+        <!-- ============================数据库相关jar包 结束========================= -->
+
+
+        <!-- ============================Shiro 开始========================= -->
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro-version}</version>
+            <exclusions>
+                <!--去掉slf4j依赖-->
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-all</artifactId>
+            <version>${shiro-version}</version>
+        </dependency>
+
+        <!-- ============================Shiro 结束========================= -->
+
+
+        <!-- ============================log日志 开始========================= -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j-version}</version>
+        </dependency>
+
+        <!-- ============================log日志 结束========================= -->
+
+
+
+        <!-- ============================cache缓存 开始========================= -->
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache-version}</version>
+        </dependency>
+
+        <!-- ============================cache缓存 结束========================= -->
+
+
+        <!-- ============================workflow工作流 开始========================= -->
+
+        <!--单独使用-->
+
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>${activity-version}</version>
+        </dependency>
+
+        <!--与spring集成-->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activity-version}</version>
+        </dependency>
+
+        <!-- ============================workflow工作流 结束========================= -->
+
+
+        <!-- ============================Timer定时器 开始========================= -->
+
+        <!-- quartz -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <!--<exclusion>
+                    <groupId>c3p0</groupId>
+                    <artifactId>c3p0</artifactId>
+                </exclusion>-->
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jta_1.1_spec</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+
+        <!-- ============================Timer定时器 结束========================= -->
+
+        <!--
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson-version}</version>
+        </dependency>
+        -->
+        <!-- -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.37</version>
+        </dependency>
+
+        <!-- servlet web Start -->
+        <!-- 刚创建的Maven项目需要导入此包，如果直接build path Tomcat包，那就不需要了 -->
+        <!-- javaee 依赖javax.mail-1.5.0.jar,activation-1.1.jar
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee-version}</version>
+        </dependency>
+        -->
+
+        <!-- jstl -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jstl-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-api-version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- servlet web End -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+
+
+
+        <!-- junit4.12 依赖 hamcrest-core-1.3.jar -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <!-- 表示开发的时候引入，发布的时候不会加载此包 -->
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <finalName>erp</finalName>
+
+        <!-- 如果Maven设置了默认JDK，那这里就不需要了 -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <!-- 会将src/main/java下的*mapper.xml文件随同java编译后到相应的class目录 -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
+
+</project>

@@ -1,0 +1,19 @@
+show databases; //显示数据库
+
+CREATE DATABASE erp CHARACTER SET utf8 COLLATE utf8_general_ci; //创建数据库erp
+
+use erp; //进入student数据库
+
+source 路径; //导入数据库  用source导入时，路径要写/不能写\，否则会报错。
+
+set global max_allowed_packet=1000000000; //导入时间过长而报错，设置这个
+
+CREATE USER 'erp'@'localhost' IDENTIFIED BY 'erp'; //创建用户 username 用户名 host IP地址 password 密码
+
+select host,user from user; (查看用户的权限情况)
+
+Grant all privileges on erp.* to 'erp'@'localhost' identified by 'erp' with grant option;(授权)
+
+mysqldump 要复制的数据库名称 -uroot -p密码 --add-drop-table | mysql 要复制到的数据库名称 -uroot -p密码
+
+FLUSH PRIVILEGES;

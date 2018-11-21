@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaomingbudushu.erp.module.sys.dao.menu.MenuDao">
+
+    <resultMap id="BaseResultMap" type="com.xiaomingbudushu.erp.module.sys.entity.menu.Menu">
+        <id column="menu_id" jdbcType="VARCHAR" property="menuId"/>
+        <result column="parent_menu_id" jdbcType="VARCHAR" property="parentMenuId"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="menu_type" jdbcType="VARCHAR" property="menuType"/>
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl"/>
+        <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon"/>
+        <result column="permissions_flag" jdbcType="VARCHAR" property="permissionsFlag"/>
+        <result column="sort" jdbcType="TINYINT" property="sort"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="last_update_id" jdbcType="VARCHAR" property="lastUpdateId"/>
+        <result column="last_update_name" jdbcType="VARCHAR" property="lastUpdateName"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        menu_id, parent_menu_id, menu_name, menu_type, menu_url, menu_icon, permissions_flag, sort,
+        status, last_update_id, last_update_name, last_update_time
+    </sql>
+
+    <select id="getByUserAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT t2.*
+        FROM t_sys_user_role t
+            LEFT JOIN t_sys_permissions t1
+                ON t.role_id = t1.permissions_id
+            LEFT JOIN t_sys_menu t2
+                ON t1.menu_id = t2.menu_id
+        WHERE t2.menu_type != 'button' AND t.user_account = #{userAccount,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getList" resultMap="BaseResultMap" resultType="com.xiaomingbudushu.erp.module.sys.entity.user.User">
+        select
+        <include refid="Base_Column_List"/>
+        from t_sys_menu
+    </select>
+
+    <insert id="insert" parameterType="com.xiaomingbudushu.erp.module.sys.entity.menu.Menu">
+        insert into
+        t_sys_menu(<include refid="Base_Column_List"/>)
+        values(#{menuId},#{parentMenuId},#{menuName},#{menuType},#{menuUrl},#{menuIcon},#{permissionsFlag}
+        ,#{sort},#{status},#{lastUpdateId},#{lastUpdateName},#{lastUpdateTime})
+    </insert>
+
+    <update id="update" parameterType="com.xiaomingbudushu.erp.module.sys.entity.menu.Menu">
+        UPDATE t_sys_menu
+        SET
+            menu_id            = #{menuId}
+            , parent_menu_id   = #{parentMenuId}
+            , menu_name        = #{menuName}
+            , menu_type        = #{menuType}
+            , menu_url         = #{menuUrl}
+            , menu_icon        = #{menuIcon}
+            , permissions_flag = #{permissionsFlag}
+            , sort             = #{sort}
+            , status           = #{status}
+            , last_update_id   = #{lastUpdateId}
+            , last_update_name = #{lastUpdateName}
+            , last_update_time = #{lastUpdateTime}
+        WHERE menu_id = #{menu_id}
+    </update>
+</mapper>

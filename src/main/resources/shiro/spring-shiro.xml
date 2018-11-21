@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+	
+	<!--=========================Shiro配置=========================-->
+	
+	<!-- 1. 配置 SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!--<property name="cacheManager" ref="shiroCacheManager" />-->
+		<property name="realm" ref="shiroRealm" />
+	</bean>
+
+	<!-- 2. 配置 CacheManager. 2.1 需要加入 cache 的 jar 包及配置文件. -->
+	<!--<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">-->
+		<!--引用spring的ehcache-->
+		<!--<property name="cacheManager" ref="cacheManager"/>-->
+		<!--如果不用spring的ehcache，可以单独启用shiro的ehcache-->
+		<!--<property name="cacheManager" value="classpath:ehcache.xml"/>-->
+	<!--</bean>-->
+
+	<!-- 3. 配置 Realm 3.1 直接配置实现了 org.apache.shiro.realm.Realm 接口的 bean -->
+	<bean id="shiroRealm" class="com.xiaomingbudushu.erp.shiro.realms.ShiroRealm">
+		<property name="credentialsMatcher">
+			<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+				<!-- 加密类型 MD5 -->
+				<property name="hashAlgorithmName" value="MD5"></property>
+				<!-- 加密次数 -->
+				<property name="hashIterations" value="1024"></property>
+			</bean>
+		</property>
+	</bean>
+
+
+	
+	<!--  
+    6. 配置 ShiroFilter. 
+    6.1 id 必须和 web.xml 文件中配置的 DelegatingFilterProxy 的 <filter-name> 一致.
+                      若不一致, 则会抛出: NoSuchBeanDefinitionException. 因为 Shiro 会来 IOC 容器中查找和 <filter-name> 名字对应的 filter bean.
+    -->     
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    	<!-- Shiro的核心安全接口，这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 要求登录时的链接(登录页面地址)，非必须的属性，默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+        <property name="loginUrl" value="/view/login.jsp"/>
+        <!-- 登录成功后要跳转的连接(本例中此属性用不到，因为登录成功后的处理逻辑在页面处理的) -->
+        <!-- <property name="successUrl" value="/"/> -->
+        <!-- 用户访问未对其授权的资源时，所显示的连接 -->
+        <property name="unauthorizedUrl" value="/view/unauthorized.jsp"/>
+        
+        <!--  
+        	配置哪些页面需要受保护. 
+        	以及访问这些页面需要的权限. 
+        	1). anon 可以被匿名访问
+        	2). authc 必须认证(即登录)后才可能访问的页面. 
+        	3). logout 登出.
+        	4). roles 角色过滤器
+        -->
+        
+        <property name="filterChainDefinitions">
+            <value>
+				<!-- 过虑器链定义，从上向下顺序执行，一般将/**放在最下边 -->
+                /login.jsp = anon
+                /LoginController/login = anon
+                /LoginController/logout = logout
+                /static/** = anon
+                # everything else requires authentication:
+                /** = authc
+            </value>
+        </property>
+        
+    </bean>
+</beans>

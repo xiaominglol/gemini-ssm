@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	
+	<!--=========================Mybatis 自动代码生成配置=====================-->
+	
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<!-- 去掉注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+		
+		<!-- 数据库连接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+		    connectionURL="jdbc:mysql://localhost:3306/erp"
+		    userAccount="erp"
+		    password="erp">
+		</jdbcConnection>
+		
+		<javaTypeResolver >
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		
+		<!-- modul路径 -->
+		<javaModelGenerator targetPackage="com.xiaomingbudushu.erp.modul.system.org" targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		
+		<!-- mapper路径 -->
+		<sqlMapGenerator targetPackage="com.xiaomingbudushu.erp.mapper.system.org"  targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<!-- Dao路径 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xiaomingbudushu.erp.mapper.system.org"  targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		
+		<!-- table -->
+		<table tableName="t_sys_org" domainObjectName="Org" ></table>
+	
+	</context>
+</generatorConfiguration>
